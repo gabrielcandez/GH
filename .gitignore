@@ -15,6 +15,7 @@
 
 # Mono auto generated files
 mono_crash.*
+.gitignore.bak
 
 # Build results
 [Dd]ebug/
@@ -68,6 +69,8 @@ ScaffoldingReadMe.txt
 
 # StyleCop
 StyleCopReport.xml
+
+.tmp
 
 # Files built by Visual Studio
 *_i.c

@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  gh.api:
+    image: ${DOCKER_REGISTRY-}ghapi
+    build:
+      context: .
+      dockerfile: GH.Api/Dockerfile

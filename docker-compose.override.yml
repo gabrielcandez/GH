@@ -1,0 +1,35 @@
+version: '3.4'
+
+services:
+  db:
+    image: mysql:8.0.27
+    environment:
+      - MYSQL_ROOT_PASSWORD=dev
+    volumes:
+      - .tmp/mysql:/var/lib/mysql
+    ports:
+        - "3306:3306"
+    healthcheck:
+        test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+        timeout: 1s
+        interval: 1s
+        retries: 100
+
+  gh.api:
+    depends_on:
+      db:
+        condition: service_healthy
+        
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - GH_DATABASE__HOST=db
+      - GH_DATABASE__USER=root
+      - GH_DATABASE__PASSWORD=dev
+      - GH_DATABASE__DATABASE=dev
+    ports:
+      - "80"
+      - "443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
