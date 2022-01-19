@@ -16,6 +16,11 @@ services:
         retries: 100
 
   gh.api:
+    image: ${DOCKER_REGISTRY-}ghapi
+    build:
+      context: .
+      dockerfile: GH.Api/Dockerfile
+
     depends_on:
       db:
         condition: service_healthy
@@ -27,9 +32,11 @@ services:
       - GH_DATABASE__USER=root
       - GH_DATABASE__PASSWORD=dev
       - GH_DATABASE__DATABASE=dev
+
     ports:
       - "80"
       - "443"
+      
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

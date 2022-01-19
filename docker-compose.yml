@@ -2,7 +2,13 @@ version: '3.4'
 
 services:
   gh.api:
-    image: ${DOCKER_REGISTRY-}ghapi
-    build:
-      context: .
-      dockerfile: GH.Api/Dockerfile
+    image: ghcr.io/gcandez/gh/api
+    restart: unless-stopped
+    environment:
+      - ASPNETCORE_URLS=https://+:443
+      - GH_DATABASE__HOST
+      - GH_DATABASE__USER
+      - GH_DATABASE__PASSWORD
+      - GH_DATABASE__DATABASE
+    ports:
+      - "443:443"
