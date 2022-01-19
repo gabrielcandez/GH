@@ -15,7 +15,7 @@ services:
         interval: 1s
         retries: 100
 
-  gh.api:
+  api:
     image: ${DOCKER_REGISTRY-}ghapi
     build:
       context: .
