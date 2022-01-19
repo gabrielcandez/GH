@@ -8,7 +8,7 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    name: publish ${{ matrix.project }}
+    name: publish ${{ matrix.image }}
 
     strategy:
       matrix:
@@ -39,7 +39,7 @@ jobs:
       - name: Build and push docker image
         uses: docker/build-push-action@v2
         with:
-          context: ${{ matrix.dockerfileDir }}
+          file: ${{ matrix.dockerfileDir }}/Dockerfile
           push: true
           tags: ghcr.io/${{ env.REPO }}/${{ matrix.imageName }}
           cache-from: type=gha
